@@ -33,5 +33,7 @@ public class OrderEntity {
     private Date orderDate;
     @Column(name="delivery_date", columnDefinition = "timestamp with time zone")
     private Date deliveryDate;
+    @Column(name="stock_id")
+    private Integer stockId;
 
 }

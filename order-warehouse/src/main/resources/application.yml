@@ -6,3 +6,5 @@ spring:
       url: ${DATABASE_URL}
       username: ${DATABASE_USER}
       password: ${DATABASE_PASSWORD}
+orders:
+  shipping-orders-update-enabled: ${SHIPPING_ORDERS_UPDATE_ENABLED}
