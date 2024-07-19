@@ -2,8 +2,10 @@ package com.example.orderwarehouse.service;
 
 import com.example.orderwarehouse.data.dto.OrderDTO;
 import com.example.orderwarehouse.data.entity.OrderEntity;
+import com.example.orderwarehouse.data.entity.id.OrderPk;
+import com.example.orderwarehouse.data.prjection.OrderProjection;
 import com.example.orderwarehouse.data.resp.CreationResponse;
-import com.example.orderwarehouse.repo.crud.OrderRepository;
+import com.example.orderwarehouse.repo.jpa.OrderJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +14,19 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepository;
+
+    private final OrderJpaRepository orderJpaRepository;
 
     public OrderServiceImpl(
-            @Autowired OrderRepository orderRepository
+
+            @Autowired OrderJpaRepository orderJpaRepository
     ) {
-        this.orderRepository = orderRepository;
+        this.orderJpaRepository = orderJpaRepository;
     }
 
     @Override
     public List<OrderDTO> getOrders() {
-        List<OrderEntity> loe = orderRepository.findAll();
+        List<OrderEntity> loe = orderJpaRepository.findAll();
         List<OrderDTO> lod = fromEntity(loe);
         return lod;
     }
@@ -46,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public CreationResponse saveOrder(OrderDTO req){
         OrderEntity loe = toEntity (req);
-        orderRepository.save(loe);
+        orderJpaRepository.save(loe);
         Date ts = new Date();
         String description = "New order created";
         CreationResponse creationResponse = new CreationResponse(ts, description);
@@ -65,5 +69,16 @@ public class OrderServiceImpl implements OrderService {
         oe.setDeliveryDate(req.getDeliveryDate());
 //        oe.setStockId(req.getSto);
         return oe;
+    }
+
+    @Override
+    public List<OrderProjection> getOrdersProjections() {
+        return orderJpaRepository.findAllProjectedBy();
+    }
+
+    @Override
+    public OrderProjection getOrdersProjectionByPk(OrderPk orderPk) {
+        return orderJpaRepository.findOrderProjectionByOrderIdAndOrderLineId(orderPk.getOrderId(),
+                orderPk.getOrderLineId());
     }
 }

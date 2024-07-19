@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration
 @PropertySource({"classpath:application.yml"})
 @EnableJpaRepositories(
-        basePackages = {"com.example.orderwarehouse.repo.crud"},
+        basePackages = {"com.example.orderwarehouse.repo"},
         entityManagerFactoryRef = "postgresEntityManager",
         transactionManagerRef = "postgresTransactionManager")
 public class PostgresConfiguration {
@@ -36,7 +36,7 @@ public class PostgresConfiguration {
     public LocalContainerEntityManagerFactoryBean postgresEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(postgresDataSource());
-        em.setPackagesToScan("com.example.orderwarehouse.data.entity");
+        em.setPackagesToScan("com.example.orderwarehouse.data");
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         Map<String, Object> properties = new HashMap<>();

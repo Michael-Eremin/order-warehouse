@@ -36,4 +36,5 @@ public class OrderEntity {
     @Column(name="stock_id")
     private Integer stockId;
 
+
 }
