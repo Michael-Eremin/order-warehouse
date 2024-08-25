@@ -27,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getOrders() {
         List<OrderEntity> loe = orderJpaRepository.findAll();
+        loe.stream().forEach(o -> System.out.println("Name " + o.getCustomerName() ));
         List<OrderDTO> lod = fromEntity(loe);
         return lod;
     }
@@ -80,5 +81,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderProjection getOrdersProjectionByPk(OrderPk orderPk) {
         return orderJpaRepository.findOrderProjectionByOrderIdAndOrderLineId(orderPk.getOrderId(),
                 orderPk.getOrderLineId());
+    }
+    @Override
+    public String getResult() {
+
+        return "Привет";
     }
 }

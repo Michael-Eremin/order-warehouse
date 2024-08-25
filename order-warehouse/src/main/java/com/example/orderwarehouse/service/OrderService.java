@@ -31,4 +31,6 @@ public interface OrderService {
      * @return list of object
      */
     OrderProjection getOrdersProjectionByPk(OrderPk orderPk);
+
+    String getResult();
 }

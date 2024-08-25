@@ -35,6 +35,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersProjections());
     }
 
+    @GetMapping("/result")
+    String getResult() {return orderService.getResult();}
+
 
 
 }
